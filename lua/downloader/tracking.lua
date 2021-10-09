@@ -1,7 +1,7 @@
 local MODULE = {}
 MODULE.Order = 100
 
-local disableTracking = CreateConVar("downloader_disable_tracking", 0, FCVAR_ARCHIVE, "Should disable tracking report")
+local disableTracking = CreateConVar("downloader_disable_tracking", 1, FCVAR_ARCHIVE, "Should disable tracking report")
 
 function MODULE:Run(context)
     if not disableTracking:GetBool() then
