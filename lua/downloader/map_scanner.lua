@@ -8,10 +8,11 @@ function MODULE:Run(context)
         local isMap = addon.tags and addon.tags:lower():find("map")
 
         if isMap then
-            -- file.Exists does not work here
-            local mapFile = file.Find("maps/" .. currentMap  .. ".bsp", addon.title)
-            if #mapFile == 1 then
+            if file.Exists("maps/" .. currentMap  .. ".bsp", addon.title) then
                 table.insert(context.usingAddons, addon)
+                context.scanResult[addon.wsid] = { selected = true, type = "Current map" }
+            else
+                context.scanResult[addon.wsid] = { selected = false, type = "Map or map content" }
             end
 
             -- Is probably a map addon, resources should be ignored

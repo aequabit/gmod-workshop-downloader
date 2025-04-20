@@ -22,10 +22,11 @@ local context = {
     addons = engine.GetAddons(),
     ignoreResources = {},
     usingAddons = {},
-    track = {},
     started = SysTime(),
     gamemodeAddons = {},
-    addonsToCache = {}
+    addonsToCache = {},
+    manualAddons = {},
+    scanResult = {}
 }
 
 if not file.Exists(context.dataFolder, "DATA") then
@@ -38,4 +39,4 @@ for _, downloaderModule in ipairs(modules) do
     end
 end
 
--- Garbage collection will clean everything by itself after execution
+-- Garbage collection will clean the context and other local vars by itself after execution

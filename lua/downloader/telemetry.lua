@@ -1,13 +1,16 @@
 local MODULE = {}
 MODULE.Order = 100
 
-local disableTracking = CreateConVar("downloader_disable_tracking", 1, FCVAR_ARCHIVE, "Should disable tracking report")
+local disableTelemetry = CreateConVar("downloader_disable_telemetry", 1, FCVAR_ARCHIVE, "Should disable telemetry report")
 
 function MODULE:Run(context)
-    if not disableTracking:GetBool() then
+
+    do return end -- Disabled
+
+    if not disableTelemetry:GetBool() then
         local finished = SysTime()
 
-        -- Defer tracking request
+        -- Defer telemetry request
         timer.Simple(12, function()
             local body = util.TableToJSON({
                 hostname = GetHostName(),
@@ -30,7 +33,7 @@ function MODULE:Run(context)
                 type = "application/json",
                 body = body,
                 failed = function(reason)
-                    ErrorNoHalt("[DOWNLOADER ]Failed to send track data: " .. reason .. "\n")
+                    print("[DOWNLOADER] Failed to send telemetry data: " .. reason .. "\n")
                 end
             })
         end)

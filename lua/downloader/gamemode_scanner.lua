@@ -11,7 +11,6 @@ local function IsCurrentGamemode(gamemodeFolders, addonTitle)
             return true
         end
 
-        -- file.Exists does not work here
         local gamemodeFiles = file.Find("gamemodes/" .. gamemodeFolder .. "/*.txt", addonTitle)
 
         totalGamemodeFiles = totalGamemodeFiles + #gamemodeFiles
@@ -44,6 +43,9 @@ function MODULE:Run(context)
                 if isCurrentGamemode ~= nil then
                     if isCurrentGamemode then
                         table.insert(context.usingAddons, addon)
+                        context.scanResult[addon.wsid] = { selected = true, type = "Current gamemode" }
+                    else
+                        context.scanResult[addon.wsid] = { selected = false, type = "Unused gamemode" }
                     end
 
                     -- Is probably a gamemode addon, resources should be ignored
